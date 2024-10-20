@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dh4owett2dafe"]
+
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_hdt1o"]
+[ext_resource type="Texture2D" uid="uid://by3pyvnmr8pwa" path="res://assets/GameBg.png" id="1_ifha8"]
+[ext_resource type="PackedScene" uid="uid://cgemlj4kjaixj" path="res://Scenes/paddle.tscn" id="2_2ggrh"]
+[ext_resource type="PackedScene" uid="uid://ngr32xj3v5cl" path="res://Scenes/diamond.tscn" id="3_eetqi"]
+[ext_resource type="Script" path="res://Scripts/spawn_timer.gd" id="5_u6xne"]
+
+[node name="World" type="Node2D"]
+position = Vector2(672, 377)
+script = ExtResource("1_hdt1o")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(-94.5, -53)
+scale = Vector2(0.598437, 0.598148)
+texture = ExtResource("1_ifha8")
+
+[node name="Paddle" parent="." instance=ExtResource("2_2ggrh")]
+position = Vector2(-294, 174)
+
+[node name="diamond" parent="." instance=ExtResource("3_eetqi")]
+position = Vector2(-179, -307)
+
+[node name="Spawn_Timer" type="Timer" parent="diamond"]
+script = ExtResource("5_u6xne")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -537.0
+offset_top = -365.0
+offset_right = -436.0
+offset_bottom = -289.0
+theme_override_font_sizes/font_size = 50
+text = "000
+"
+
+[connection signal="area_entered" from="Paddle" to="." method="_on_paddle_area_entered"]
+[connection signal="area_entered" from="Paddle" to="diamond" method="_on_paddle_area_entered"]
+[connection signal="area_entered" from="diamond" to="Paddle" method="_on_area_2d_area_entered"]
